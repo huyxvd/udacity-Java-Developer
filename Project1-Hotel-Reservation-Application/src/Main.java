@@ -56,7 +56,8 @@ public class Main {
             // Create an instance of the Room class with the entered information
             Room room = new Room(roomNumber, price, roomType);
             //.add(room);
-            AdminResource.addRoom(room);
+            AdminResource _AdminResource = AdminResource.getInstance();
+            _AdminResource.addRoom(room);
 
             System.out.print("Add another room? (y/n): ");
             String addAnotherRoom = scanner.nextLine();
@@ -65,6 +66,8 @@ public class Main {
     }
 
     private static void AdminMenu() {
+
+        AdminResource _AdminResource = AdminResource.getInstance();
         Scanner scanner = new Scanner(System.in);
         int option;
 
@@ -82,21 +85,21 @@ public class Main {
                 case 1:
                     // Perform actions for Option 1
                     System.out.println("-----------See all Customers---------------");
-                    for (Customer element : AdminResource.getAllCustomers()) {
+                    for (Customer element : _AdminResource.getAllCustomers()) {
                         element.displayInfo();
                     }
                     break;
                 case 2:
                     // Perform actions for Option 2
                     System.out.println("-----------See all Rooms---------------");
-                    for (IRoom element : AdminResource.getAllRooms()) {
+                    for (IRoom element : _AdminResource.getAllRooms()) {
                         element.displayInfo();
                     }
                     break;
                 case 3:
                     // Perform actions for Option 3
                     System.out.println("-----------See all Reservations---------------");
-                    AdminResource.displayAllReservations();
+                    _AdminResource.displayAllReservations();
                     break;
                 case 4:
                     System.out.println("4.  Add a Room");
@@ -126,30 +129,32 @@ public class Main {
     }
 
     private  static  void FakeData() throws ParseException {
+        AdminResource _AdminResource = AdminResource.getInstance();
         Room room1 = new Room("101", 100.0, RoomType.SINGLE);
         Room room2 = new Room("102", 150.0, RoomType.DOUBLE);
         Room room3 = new Room("103", 250.0, RoomType.DOUBLE);
         Room room4 = new Room("104", 350.0, RoomType.DOUBLE);
-        AdminResource.addRoom(room1);
-        AdminResource.addRoom(room2);
-        AdminResource.addRoom(room3);
-        AdminResource.addRoom(room4);
+        _AdminResource.addRoom(room1);
+        _AdminResource.addRoom(room2);
+        _AdminResource.addRoom(room3);
+        _AdminResource.addRoom(room4);
 
-        HotelResource.createACustomer("john.doe@example.com", "John", "Doe");
-        HotelResource.createACustomer("alice.smith@example.com", "Alice", "Smith");
-        HotelResource.createACustomer("bob.johnson@example.com", "Bob", "Johnson");
-        HotelResource.createACustomer("emily.davis@example.com", "Emily", "Davis");
-        HotelResource.createACustomer("michael.brown@example.com", "Michael", "Brown");
+        HotelResource _HotelResource = HotelResource.getInstance();
+        _HotelResource.createACustomer("john.doe@example.com", "John", "Doe");
+        _HotelResource.createACustomer("alice.smith@example.com", "Alice", "Smith");
+        _HotelResource.createACustomer("bob.johnson@example.com", "Bob", "Johnson");
+        _HotelResource.createACustomer("emily.davis@example.com", "Emily", "Davis");
+        _HotelResource.createACustomer("michael.brown@example.com", "Michael", "Brown");
 
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
         try {
-            HotelResource.bookARoom("john.doe@example.com", room1, dateFormat.parse("1-1-2000"), dateFormat.parse("10-1-2000") );
-            HotelResource.bookARoom("john.doe@example.com", room2, dateFormat.parse("1-1-2000"), dateFormat.parse("10-1-2000") );
+            _HotelResource.bookARoom("john.doe@example.com", room1, dateFormat.parse("1-1-2000"), dateFormat.parse("10-1-2000") );
+            _HotelResource.bookARoom("john.doe@example.com", room2, dateFormat.parse("1-1-2000"), dateFormat.parse("10-1-2000") );
             Date in = dateFormat.parse("5-1-2000");
             Date out = dateFormat.parse("6-1-2000");
-            Collection<IRoom> rooms = HotelResource.findARoom( in, out );
+            Collection<IRoom> rooms = _HotelResource.findARoom( in, out );
 
             for (IRoom room: rooms) {
                 room.displayInfo();
@@ -159,6 +164,7 @@ public class Main {
         }
     }
     private static void MainMenu(int option) {
+        HotelResource _HotelResource = HotelResource.getInstance();
         Scanner scanner = new Scanner(System.in);
         switch (option) {
             case 1:
@@ -178,7 +184,7 @@ public class Main {
                     checkInDate = dateFormat.parse(checkInDateStr);
                     checkOutDate = dateFormat.parse(checkOutDateStr);
 
-                    Collection <IRoom> rooms = HotelResource.findARoom(checkInDate, checkOutDate);
+                    Collection <IRoom> rooms = _HotelResource.findARoom(checkInDate, checkOutDate);
 
                     if(rooms.isEmpty()) {
                         System.out.println("no room available");
@@ -195,11 +201,11 @@ public class Main {
 
                 System.out.print("which room you want to reserve: ");
                 String roomIdReserver = scanner.nextLine();
-                IRoom room = HotelResource.getRoom(roomIdReserver);
+                IRoom room = _HotelResource.getRoom(roomIdReserver);
                 System.out.print("customer email: ");
                 String _customerEmail = scanner.nextLine();
 
-                Reservation res = HotelResource.bookARoom(_customerEmail, room, checkInDate, checkOutDate );
+                Reservation res = _HotelResource.bookARoom(_customerEmail, room, checkInDate, checkOutDate );
                 res.displayInfo();
 
                 // Perform actions for Option 1
@@ -208,7 +214,7 @@ public class Main {
                 System.out.println("--------------------See my reservations---------------------");
                 System.out.println("customer email: ");
                 String customerEmail = scanner.nextLine();
-                Collection<Reservation> reservations = HotelResource.getCustomersReservations(customerEmail);
+                Collection<Reservation> reservations = _HotelResource.getCustomersReservations(customerEmail);
 
                 if(reservations.isEmpty()) {
                     System.out.println("no reservations found");
@@ -238,7 +244,7 @@ public class Main {
                 System.out.print("Email: ");
                 email = scanner.nextLine();
 
-                HotelResource.createACustomer(email, firstName, lastName);
+                _HotelResource.createACustomer(email, firstName, lastName);
                 // Perform actions for Option 3
                 break;
             case 4:
@@ -270,6 +276,7 @@ public class Main {
                 System.out.println();
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter a valid option number.");
+                System.out.println(e.getMessage());
                 scanner.nextLine(); // Clear the invalid input from the scanner
                 option = 0; // Set option to 0 to continue the loop
             }

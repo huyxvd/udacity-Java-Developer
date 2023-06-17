@@ -10,33 +10,49 @@ import java.util.Collection;
 import java.util.Date;
 
 public class HotelResource {
-    public static Customer getCustomer(String email) {
-        return  null;
+    private final CustomerService _customerService = CustomerService.getInstance();
+    private final ReservationService _reservationService = ReservationService.getInstance();
+
+    private static HotelResource _HotelResource;
+    private HotelResource() {
     }
 
-    public static void createACustomer(String  email,  String firstName, String lastName) {
-        CustomerService.addCustomer(email, firstName, lastName);
+    public static HotelResource getInstance() {
+        if(_HotelResource == null) {
+            _HotelResource = new HotelResource();
+        }
+
+        return _HotelResource;
     }
 
-    public static IRoom getRoom(String roomNumber)
+    public Customer getCustomer(String email) {
+        return  _HotelResource.getCustomer(email);
+    }
+
+    public void createACustomer(String  email,  String firstName, String lastName) {
+        _customerService.addCustomer(email, firstName, lastName);
+    }
+
+    public IRoom getRoom(String roomNumber)
     {
-
-        return ReservationService.getARoom(roomNumber);
+        return _reservationService.getARoom(roomNumber);
     }
 
-    public static Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate, Date CheckOutDate)
+    public Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate, Date CheckOutDate)
     {
-        Customer customer = CustomerService.getCustomer(customerEmail);
-        return ReservationService.reserveARoom(customer, room, checkInDate, CheckOutDate);
+        Customer customer = _customerService.getCustomer(customerEmail);
+
+
+        return _reservationService.reserveARoom(customer, room, checkInDate, CheckOutDate);
     }
 
-    public static Collection<Reservation> getCustomersReservations(String customerEmail)
+    public Collection<Reservation> getCustomersReservations(String customerEmail)
     {
-        return ReservationService.getCustomersReservation(customerEmail);
+        return _reservationService.getCustomersReservation(customerEmail);
     }
 
-    public static Collection<IRoom> findARoom(Date checkIn, Date checkOut)
+    public Collection<IRoom> findARoom(Date checkIn, Date checkOut)
     {
-        return ReservationService.findRooms(checkIn, checkOut);
+        return _reservationService.findRooms(checkIn, checkOut);
     }
 }

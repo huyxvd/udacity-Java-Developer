@@ -9,28 +9,44 @@ import java.util.Collection;
 import java.util.List;
 
 public class AdminResource {
-    public static Customer getCustomer(String email)
-    {
-        return CustomerService.getCustomer(email);
+
+    private final CustomerService _customerService = CustomerService.getInstance();
+    private final ReservationService _reservationService = ReservationService.getInstance();
+
+    private static AdminResource _AdminResource;
+    private AdminResource() {
     }
 
-    public static void addRoom(IRoom room)
-    {
-        ReservationService.addRoom(room);
+    public static AdminResource getInstance() {
+        if(_AdminResource == null) {
+            _AdminResource = new AdminResource();
+        }
+
+        return _AdminResource;
     }
 
-    public static Collection<IRoom> getAllRooms()
+    public Customer getCustomer(String email)
     {
-        return ReservationService.getAllRoom();
+        return _customerService.getCustomer(email);
     }
 
-    public static Collection<Customer> getAllCustomers()
+    public void addRoom(IRoom room)
     {
-        return CustomerService.getAllCustomers();
+        _reservationService.addRoom(room);
     }
 
-    public static void displayAllReservations()
+    public Collection<IRoom> getAllRooms()
     {
-        ReservationService.printAllReservation();
+        return _reservationService.getAllRoom();
+    }
+
+    public Collection<Customer> getAllCustomers()
+    {
+        return _customerService.getAllCustomers();
+    }
+
+    public void displayAllReservations()
+    {
+        _reservationService.printAllReservation();
     }
 }

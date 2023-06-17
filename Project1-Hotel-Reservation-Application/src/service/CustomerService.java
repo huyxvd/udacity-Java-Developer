@@ -7,12 +7,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class CustomerService {
-    static Collection<Customer> customers= new ArrayList<Customer>();
-    public static void addCustomer(String email, String firstName, String lastName) {
+    private static CustomerService CustomerServiceInstance;
+    private CustomerService() {
+    }
+    
+    public static CustomerService getInstance() {
+        if (CustomerServiceInstance == null) {
+            CustomerServiceInstance = new CustomerService();
+        }
+
+        return CustomerServiceInstance;
+    }
+    
+    static Collection<Customer> customers = new ArrayList<Customer>();
+    
+    public void addCustomer(String email, String firstName, String lastName) {
         Customer newCustomer = new Customer(firstName, lastName, email);
         customers.add(newCustomer);
     }
-    public static Customer getCustomer(String customerEmail)
+    public Customer getCustomer(String customerEmail)
     {
 
         for (Customer customer: customers) {
@@ -23,7 +36,7 @@ public class CustomerService {
         return null;
     }
 
-    public static Collection<Customer> getAllCustomers() {
+    public Collection<Customer> getAllCustomers() {
         return customers;
     }
 }
