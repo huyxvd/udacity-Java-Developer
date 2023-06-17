@@ -5,10 +5,7 @@ import service.CustomerService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -112,6 +109,8 @@ public class Main {
                         FakeData();
                     } catch (Exception ex) {
 
+                        System.out.println("in valid data");
+                        System.out.println(ex.getMessage());
                     }
                     break;
                 case 6:
@@ -187,8 +186,24 @@ public class Main {
                     Collection <IRoom> rooms = _HotelResource.findARoom(checkInDate, checkOutDate);
 
                     if(rooms.isEmpty()) {
-                        System.out.println("no room available");
-                        break;
+                        System.out.println("no room available in search range we suggest other range ");
+
+                        // Create a Calendar instance and set the Date object
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(checkOutDate);
+
+                        // Increase the date by a specific amount
+                        calendar.add(Calendar.DAY_OF_MONTH, 30);
+
+                        // Get the increased date as a Date object
+                        Date increasedDate = calendar.getTime();
+                        calendar.add(Calendar.DAY_OF_MONTH, 35);
+                        Date increasedDate2 = calendar.getTime();
+                        System.out.println("From: " + increasedDate + "To: " + increasedDate2 );
+                        rooms = _HotelResource.findARoom(increasedDate, increasedDate2);
+                        if(rooms.isEmpty()) {
+                            break;
+                        }
                     }
 
                     for (IRoom room: rooms) {

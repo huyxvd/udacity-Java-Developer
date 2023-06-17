@@ -32,6 +32,12 @@ public class AdminResource {
 
     public void addRoom(IRoom room)
     {
+        Collection<IRoom> rooms = _reservationService.getAllRoom();
+        for (IRoom a: rooms) {
+            if(a.getRoomNumber().equals(room.getRoomNumber())) {
+                throw new IllegalArgumentException("RoomID exited please choose other id");
+            }
+        }
         _reservationService.addRoom(room);
     }
 
