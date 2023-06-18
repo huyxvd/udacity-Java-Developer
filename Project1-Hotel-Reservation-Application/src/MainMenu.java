@@ -71,6 +71,7 @@ public class MainMenu {
                         Date increasedDate = calendar.getTime();
                         calendar.add(Calendar.DAY_OF_MONTH, 35);
                         Date increasedDate2 = calendar.getTime();
+                        System.out.println("--------------suggest date & room -----------------");
                         System.out.println("From: " + increasedDate + "To: " + increasedDate2 );
                         rooms = _HotelResource.findARoom(increasedDate, increasedDate2);
                         if(rooms.isEmpty()) {
