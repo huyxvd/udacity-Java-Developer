@@ -4,14 +4,12 @@ import model.Customer;
 import model.IRoom;
 import model.Reservation;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 public class ReservationService {
 
     public static Collection<Reservation> reservations = new ArrayList<Reservation>();
-    public static Collection<IRoom> rooms = new ArrayList<IRoom>();
+    public static Set<IRoom> rooms = new HashSet<IRoom>();
     private static ReservationService ReservationServiceInstance;
     private ReservationService() {
     }

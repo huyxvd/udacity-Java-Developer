@@ -41,4 +41,21 @@ public class Room implements IRoom {
     public String toString() {
         return String.format("RoomNumer:\n %s \nRoomType: %s \nprice: %d",roomNumber, roomType, price);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        IRoom room = (IRoom) obj;
+        return roomNumber == room.getRoomNumber();
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.parseInt(roomNumber);
+    }
 }
