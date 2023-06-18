@@ -50,10 +50,20 @@ public class MainMenu {
                 String checkOutDateStr = scanner.nextLine();
                 Date checkInDate = new Date();
                 Date checkOutDate = new Date();
+                Date today = new Date();
 
                 try {
                     checkInDate = dateFormat.parse(checkInDateStr);
                     checkOutDate = dateFormat.parse(checkOutDateStr);
+
+                    if(today.compareTo(checkInDate) > 0) {
+                        throw new IllegalArgumentException("date check-in must be greater todayy");
+                    }
+
+                    if(checkOutDate.compareTo(checkInDate) < 0) {
+
+                        throw new IllegalArgumentException("date check out must be greater than checkin");
+                    }
 
                     Collection<IRoom> rooms = _HotelResource.findARoom(checkInDate, checkOutDate);
 
@@ -76,6 +86,7 @@ public class MainMenu {
                         System.out.println("From: " + dateFormat.format(increasedDate) + "To: " + dateFormat.format(increasedDate2) );
                         rooms = _HotelResource.findARoom(increasedDate, increasedDate2);
                         if(rooms.isEmpty()) {
+                            System.out.println("--------------not found any room avaiable-----------------");
                             break;
                         }
                     }
@@ -84,19 +95,19 @@ public class MainMenu {
                         room.displayInfo();
                     }
 
+                    System.out.print("which room you want to reserve: ");
+                    String roomIdReserver = scanner.nextLine();
+                    IRoom room = _HotelResource.getRoom(roomIdReserver);
+                    System.out.print("customer email: ");
+                    String _customerEmail = scanner.nextLine();
+
+                    Reservation res = _HotelResource.bookARoom(_customerEmail, room, checkInDate, checkOutDate );
+                    res.displayInfo();
+
                 } catch (Exception e) {
-                    System.out.println("Invalid date format. Please enter dates in the format dd-MM-yyyy.");
+                    System.out.println("Invalid data.");
+                    System.out.println(e.getMessage());
                 }
-
-                System.out.print("which room you want to reserve: ");
-                String roomIdReserver = scanner.nextLine();
-                IRoom room = _HotelResource.getRoom(roomIdReserver);
-                System.out.print("customer email: ");
-                String _customerEmail = scanner.nextLine();
-
-                Reservation res = _HotelResource.bookARoom(_customerEmail, room, checkInDate, checkOutDate );
-                res.displayInfo();
-
                 // Perform actions for Option 1
                 break;
             case 2:
