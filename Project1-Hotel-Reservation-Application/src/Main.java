@@ -26,7 +26,7 @@ public class Main {
 
                 System.out.println();
             } catch (Exception e) {
-                System.out.println("Invalid input. Please enter a valid option number.");
+                System.out.println("Invalid input");
                 System.out.println(e.getMessage());
                 scanner.nextLine(); // Clear the invalid input from the scanner
                 option = 0; // Set option to 0 to continue the loop
