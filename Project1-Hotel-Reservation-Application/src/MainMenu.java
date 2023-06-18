@@ -58,21 +58,22 @@ public class MainMenu {
                     Collection<IRoom> rooms = _HotelResource.findARoom(checkInDate, checkOutDate);
 
                     if(rooms.isEmpty()) {
-                        System.out.println("no room available in search range we suggest other range ");
+                        System.out.println("no room available in search range");
 
                         // Create a Calendar instance and set the Date object
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(checkOutDate);
 
                         // Increase the date by a specific amount
-                        calendar.add(Calendar.DAY_OF_MONTH, 30);
+                        calendar.add(Calendar.DAY_OF_MONTH, 300);
 
                         // Get the increased date as a Date object
                         Date increasedDate = calendar.getTime();
-                        calendar.add(Calendar.DAY_OF_MONTH, 35);
+                        calendar.add(Calendar.DAY_OF_MONTH, 310);
                         Date increasedDate2 = calendar.getTime();
-                        System.out.println("--------------suggest date & room -----------------");
-                        System.out.println("From: " + increasedDate + "To: " + increasedDate2 );
+                        System.out.println("--------------suggest date & room (dd-MM-yyyy) -----------------");
+
+                        System.out.println("From: " + dateFormat.format(increasedDate) + "To: " + dateFormat.format(increasedDate2) );
                         rooms = _HotelResource.findARoom(increasedDate, increasedDate2);
                         if(rooms.isEmpty()) {
                             break;
