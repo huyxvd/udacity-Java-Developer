@@ -72,7 +72,7 @@ public class MainMenu {
 
                         // Create a Calendar instance and set the Date object
                         Calendar calendar = Calendar.getInstance();
-                        calendar.setTime(checkOutDate);
+                        calendar.setTime(checkInDate);
 
                         // Increase the date by a specific amount
                         calendar.add(Calendar.DAY_OF_MONTH, 7);
