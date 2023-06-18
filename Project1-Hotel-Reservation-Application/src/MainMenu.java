@@ -75,11 +75,11 @@ public class MainMenu {
                         calendar.setTime(checkOutDate);
 
                         // Increase the date by a specific amount
-                        calendar.add(Calendar.DAY_OF_MONTH, 300);
+                        calendar.add(Calendar.DAY_OF_MONTH, 7);
 
                         // Get the increased date as a Date object
                         Date increasedDate = calendar.getTime();
-                        calendar.add(Calendar.DAY_OF_MONTH, 310);
+                        calendar.add(Calendar.DAY_OF_MONTH, 10);
                         Date increasedDate2 = calendar.getTime();
                         System.out.println("--------------suggest date & room (dd-MM-yyyy) -----------------");
 
