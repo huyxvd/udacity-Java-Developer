@@ -45,7 +45,7 @@ public class AdminMenu {
 
         while (addMoreRooms) {
             System.out.print("Enter room number: ");
-            String roomNumber = scanner.nextLine();
+            Integer roomNumber = scanner.nextInt();
 
             System.out.print("Enter price: ");
             double price = scanner.nextDouble();
@@ -64,7 +64,7 @@ public class AdminMenu {
             }
 
             // Create an instance of the Room class with the entered information
-            Room room = new Room(roomNumber, price, roomType);
+            Room room = new Room(roomNumber.toString(), price, roomType);
             //.add(room);
             AdminResource _AdminResource = AdminResource.getInstance();
             _AdminResource.addRoom(room);
