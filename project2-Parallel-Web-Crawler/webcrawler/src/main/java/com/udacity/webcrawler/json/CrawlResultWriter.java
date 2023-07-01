@@ -35,7 +35,6 @@ public final class CrawlResultWriter {
   public void write(Path path) {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(path);
-    // TODO: Fill in this method.
     try(BufferedWriter writer = Files.newBufferedWriter(path, StandardOpenOption.CREATE)){
       write(writer);
     } catch (IOException ex) {
@@ -51,7 +50,6 @@ public final class CrawlResultWriter {
   public void write(Writer writer) throws IOException {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(writer);
-    // TODO: Fill in this method.
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
     objectMapper.writeValue(writer, result);

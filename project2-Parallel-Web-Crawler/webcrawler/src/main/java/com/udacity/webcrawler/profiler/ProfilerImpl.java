@@ -58,10 +58,6 @@ final class ProfilerImpl implements Profiler {
 
     ClassLoader loader = klass.getClassLoader();
 
-    // TODO: Use a dynamic proxy (java.lang.reflect.Proxy) to "wrap" the delegate in a
-    //       ProfilingMethodInterceptor and return a dynamic proxy from this method.
-    //       See https://docs.oracle.com/javase/10/docs/api/java/lang/reflect/Proxy.html.
-
     @SuppressWarnings("unchecked")
     T proxy = (T) Proxy.newProxyInstance(
             loader,
@@ -74,8 +70,6 @@ final class ProfilerImpl implements Profiler {
 
   @Override
   public void writeData(Path path) {
-    // TODO: Write the ProfilingState data to the given file path. If a file already exists at that
-    //       path, the new data should be appended to the existing file.
     try (BufferedWriter out = new BufferedWriter(new FileWriter(path.toString(), true))){
       writeData(out);
     } catch (IOException ex) {
