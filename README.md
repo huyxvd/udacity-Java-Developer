@@ -5,7 +5,7 @@ Thank you for reviewing the code in our project. Your feedback and suggestions h
 
 1. [Hotel Reservation Application](Project1-Hotel-Reservation-Application)
 
-2. project2
+2. [Parallel Web Crawler](project2-Parallel-Web-Crawler)
 
 3. project3
 
